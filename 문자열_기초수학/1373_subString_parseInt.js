@@ -1,4 +1,5 @@
 // 문제 설명 : 주어진 2진수 문자열을 8진수 문자열로 변환
+// 핵심 개념 : parseInt, toString 자바스크립트 내장함수 사용
 const fs = require("fs");
 const input = fs.readFileSync("/dev/stdin").toString().trim(); // 입력을 받아 문자열로 변환하고 양 끝 공백 제거
 

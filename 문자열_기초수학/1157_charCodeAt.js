@@ -1,5 +1,5 @@
 // 문제 설명 : 주어진 문자열에서 가장 빈도수가 높은 알파벳을 출력
-// 핵심 개념 :
+// 핵심 개념 : 아스키코드를 활용한 빈도수 비교
 var fs = require("fs");
 var input = fs.readFileSync("/dev/stdin").toString();
 
