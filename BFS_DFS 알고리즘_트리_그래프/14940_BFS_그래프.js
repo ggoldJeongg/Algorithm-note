@@ -11,37 +11,40 @@ let target = null;
 
 // 지도 정보 입력 받기 및 목표 지점 찾기
 for (let i = 1; i <= n; i++) {
-  let row = input[i].split(" ").map(Number);
-  map.push(row);
+  let row = input[i].split(" ").map(Number); // 각 행의 정보를 배열로 변환
+  map.push(row); // 지도를 입력받아 map에 추가
   for (let j = 0; j < m; j++) {
     if (row[j] === 2) {
-      target = [i - 1, j];
+      // 목표 지점(2)을 찾으면
+      target = [i - 1, j]; // 목표 지점의 좌표 저장
     }
   }
 }
 
 // 방향 배열 (상, 하, 좌, 우)
 let directions = [
-  [-1, 0],
-  [1, 0],
-  [0, -1],
-  [0, 1],
+  [-1, 0], // 상
+  [1, 0], // 하
+  [0, -1], // 좌
+  [0, 1], // 우
 ];
 
 // BFS 초기 설정
-let queue = [];
-let distances = Array.from({ length: n }, () => Array(m).fill(-1));
+let queue = []; // BFS를 위한 큐
+let distances = Array.from({ length: n }, () => Array(m).fill(-1)); // 거리 배열, 초기값은 -1
 
 // 목표 지점 초기화
-queue.push(target);
-distances[target[0]][target[1]] = 0;
+queue.push(target); // 큐에 목표 지점 추가
+distances[target[0]][target[1]] = 0; // 목표 지점의 거리는 0
 
 // BFS 수행
 while (queue.length > 0) {
-  let [x, y] = queue.shift();
+  let [x, y] = queue.shift(); // 큐에서 좌표를 하나 꺼냄
   for (let [dx, dy] of directions) {
-    let nx = x + dx;
-    let ny = y + dy;
+    // 4개의 방향으로 이동
+    let nx = x + dx; // 새로운 x 좌표
+    let ny = y + dy; // 새로운 y 좌표
+    // 유효한 좌표인지 검사하고, 이동할 수 있으며, 아직 방문하지 않은 경우
     if (
       nx >= 0 &&
       nx < n &&
@@ -50,23 +53,24 @@ while (queue.length > 0) {
       map[nx][ny] === 1 &&
       distances[nx][ny] === -1
     ) {
-      distances[nx][ny] = distances[x][y] + 1;
-      queue.push([nx, ny]);
+      distances[nx][ny] = distances[x][y] + 1; // 거리를 갱신
+      queue.push([nx, ny]); // 큐에 새로운 좌표를 추가
     }
   }
 }
 
 // 결과 출력
 for (let i = 0; i < n; i++) {
-  let row = [];
+  let row = []; // 출력할 행을 저장할 배열
   for (let j = 0; j < m; j++) {
     if (map[i][j] === 0) {
+      // 장애물(0)은 그대로 출력
       row.push(0);
     } else {
-      row.push(distances[i][j]);
+      row.push(distances[i][j]); // 거리 값을 출력
     }
   }
-  console.log(row.join(" "));
+  console.log(row.join(" ")); // 행을 문자열로 변환하여 출력
 }
 
 /* 조건 요약
