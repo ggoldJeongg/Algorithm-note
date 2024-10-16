@@ -41,12 +41,12 @@ console.log(arr);
 let stringArr = ["fineapple", "banana", "durian", "apple", "carrot"];
 // 별도 기준 함수가 없을 경우 유니코드순으로 자동 정렬
 arr.sort();
-console.log(arr);
+console.log(stringArr);
 
 // (6)문자열 내림차순 정렬
 function compare4(a, b) {
-  if (a < b) return -1; // a와 b의 값을 비교하여
-  else if (a > b) return 1; // 리턴된 값을 정의하고
+  if (a > b) return -1; // a와 b의 값을 비교하여
+  else if (a < b) return 1; // 리턴된 값을 정의하고
   else return 0; // 리턴값을 비교하여 정렬
 }
 
@@ -59,7 +59,7 @@ let stringArr2 = ["fineapple", "Banana", "durian", "Apple", "carrot"];
 function compare5(a, b) {
   let upperCaseA = a.toUpperCase();
   let upperCaseB = b.toUpperCase();
-  if (upperCaseA < uppserCaseB) return -1;
+  if (upperCaseA < upperCaseB) return -1;
   else if (upperCaseA > upperCaseB) return 1;
   else return 0;
 }
