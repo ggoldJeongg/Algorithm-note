@@ -16,8 +16,9 @@ const disjoint = Array.from({ length: N + 1 }, (_, i) => i);
 
 // 유니온-파인드의 Find 함수: 루트 노드(최상위 부모)를 찾음
 function Find(x, disjoint) {
-    if (x !== disjoint[x]) {
-        // 경로 압축(Path Compression): 중간 노드를 루트로 바로 연결해 최적화
+    if (x !== disjoint[x]) { // x가 자기자신을 부모로 가지지 않으면 = 다른 집합에 속해있으면
+        //x의 부모를 재귀호출하여 최상위 부모를 찾음 (종료조건)
+        //찾은 루트 노드를 현재 노드 x의 부모로 갱신 (경로압축)
         disjoint[x] = Find(disjoint[x], disjoint);
     }
     return disjoint[x];
@@ -38,20 +39,20 @@ function Union(a, b, disjoint) {
 }
 
 // M개의 연결 정보를 처리하여 유니온-파인드 수행
-for (let i = 1; i <= M; i++) {
-    const [a, b] = input[i].split(' ').map(Number); // 연결된 두 건물
-    Union(a, b, disjoint); // 두 건물을 같은 집합으로 병합
+for (let idx = 1; idx <= M; idx++) {
+    const [i, j] = input[idx].split(' ').map(Number); // 연결된 두 건물
+    Union(i, j, disjoint); // 두 건물을 같은 집합으로 병합
 }
 
-// 강의 시간표(L) 입력
-const L = input[M + 1].split(' ').map(Number);
+// 강의 시간표 입력
+const timeTable = input[M + 1].split(' ').map(Number);
 
 // 최소 이동 횟수 계산
 let total = 0;
 
 // 강의 시간표를 순회하며 이전 강의 건물과 현재 강의 건물의 루트를 비교
-for (let i = 1; i < L.length; i++) {
-    if (Find(L[i - 1], disjoint) !== Find(L[i], disjoint)) {
+for (let i = 1; i < timeTable.length; i++) {
+    if (Find(timeTable[i - 1], disjoint) !== Find(timeTable[i], disjoint)) {
         // 서로 다른 집합에 속하면 이동이 필요하므로 이동 횟수 증가
         total++;
     }
